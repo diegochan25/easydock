@@ -1,0 +1,23 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+
+# Dotenv files
+.env
+.env.*
+!.env.example
+
+# SQLite Databases
+*.sqlite
+*.sqlite3
+# Tailwind build output / collectstatic
+apps/theme/static/css/dist/
+staticfiles/
