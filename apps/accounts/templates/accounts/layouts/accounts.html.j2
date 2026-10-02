@@ -1,0 +1,17 @@
+{% extends global_layout('base.html.j2') %}
+
+{% block body %}
+<div class="w-full h-full flex flex-col">
+    <header class="flex items-center px-6 py-4">
+        <h1 class="flex-1 text-xl font-bold">EasyDock</h1>
+        <div class="flex flex-col items-end gap-1 text-sm">
+            <h2 class="uppercase font-medium text-ink-muted">instance</h2>
+            <p class="font-mono">easydock.typecrafters.dev</p>
+        </div>
+    </header>
+    <main class="flex-1 w-full flex justify-center items-center">
+        {% block content %}
+        {% endblock %}
+    </main>
+</div>
+{% endblock %}

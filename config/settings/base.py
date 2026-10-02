@@ -102,6 +102,8 @@ STATIC_ROOT = BASE_DIR / 'public'
 
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
+AUTH_USER_MODEL = 'accounts.User'
+
 STORAGES = {
     'default': {'BACKEND': 'django.core.files.storage.FileSystemStorage'},
     'staticfiles': {'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage'},

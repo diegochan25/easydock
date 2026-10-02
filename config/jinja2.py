@@ -23,7 +23,9 @@ def _local(context, kind: str, relpath: str) -> str:
     filename = Path(context.environment.get_template(context.name).filename)
     for scope, directory in TEMPLATE_DIRS.items():
         if filename.is_relative_to(directory):
-            return f"{scope}:{kind}/{relpath}"
+            # App templates are namespaced on disk: apps/<app>/templates/<app>/<kind>/...
+            prefix = '' if scope == ROOT else f"{scope}/"
+            return f"{scope}:{prefix}{kind}/{relpath}"
     return _global(kind, relpath)
 
 

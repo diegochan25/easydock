@@ -1,0 +1,83 @@
+{% extends layout('accounts.html.j2') %}
+
+{% block content %}
+<form method="post" class="w-full max-w-lg bg-surface-100 border border-border rounded-lg p-6 flex flex-col gap-6">
+    <div class="space-y-2">
+        <h4 class="text-sm uppercase font-medium text-ink-muted">instance setup</h4>
+        <h2 class="text-2xl font-semibold">Create the owner account</h2>
+        <p class="text-ink-muted">
+            This instance has no users yet. 
+            The owner account can invite other people.
+        </p>
+    </div>
+    <div class="space-y-4">
+        <div class="space-y-1">
+            <div class="block font-medium">
+                {{ form.full_name.label_tag() }}
+            </div>
+            <div class="bg-surface-0 border border-border rounded-md text-lg w-full flex items-center px-2 py-1 gap-2 outline-2 outline-transparent has-focus:outline-focus-ring duration-150">
+                {{ form.full_name }}
+            </div>
+            <div class="text-sm text-red-600">
+                {{ form.full_name.errors }}
+            </div>
+        </div>
+    </div>
+    <div class="space-y-4">
+        <div class="space-y-1">
+            <div class="block font-medium">
+                {{ form.email.label_tag() }}
+            </div>
+            <div class="bg-surface-0 border border-border rounded-md text-lg w-full flex items-center px-2 py-1 gap-2 outline-2 outline-transparent has-focus:outline-focus-ring duration-150">
+                {{ form.email }}
+            </div>
+            <div class="text-sm text-red-600">
+                {{ form.email.errors }}
+            </div>
+        </div>
+    </div>
+    <div class="space-y-4" x-data="{showPassword: false}">
+        <div class="space-y-1">
+            <div class="block font-medium">
+                {{ form.password.label_tag() }}
+            </div>
+            <div class="bg-surface-0 border border-border rounded-md text-lg w-full flex items-center px-2 py-1 gap-2 outline-2 outline-transparent has-focus:outline-focus-ring duration-150">
+                {{ form.password }}
+                <button 
+                    type="button"
+                    class="text-blue-500 hover:underline" 
+                    x-on:click="showPassword = !showPassword"
+                    x-text="showPassword ? 'Hide' : 'Show'"
+                ></button>
+            </div>
+            <div class="text-sm text-red-600">
+                {{ form.password.errors }}
+            </div>
+        </div>
+    </div>
+    <div class="space-y-4" x-data="{showConfirmPassword: false}">
+        <div class="space-y-1">
+            <div class="block font-medium">
+                {{ form.confirm_password.label_tag() }}
+            </div>
+            <div class="bg-surface-0 border border-border rounded-md text-lg w-full flex items-center px-2 py-1 gap-2 outline-2 outline-transparent has-focus:outline-focus-ring duration-150">
+                {{ form.confirm_password }}
+                <button 
+                    type="button"
+                    class="text-blue-500 hover:underline" 
+                    x-on:click="showConfirmPassword = !showConfirmPassword"
+                    x-text="showConfirmPassword ? 'Hide' : 'Show'"
+                ></button>
+            </div>
+            <div class="text-sm text-red-600">
+                {{ form.confirm_password.errors }}
+            </div>
+        </div>
+    </div>
+    <input 
+        type="submit" 
+        value="Create owner account" 
+        class="px-3 py-2 rounded-lg bg-brand text-surface-0 font-medium hover:bg-brand/70 active:translate-y-1 duration-150"
+    >
+</form>
+{% endblock %}
