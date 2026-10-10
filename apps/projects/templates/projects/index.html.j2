@@ -1,0 +1,43 @@
+{% extends global_layout('base.html.j2') %}
+
+{% set dialog_id = 'newProject' %}
+
+{% block body %}
+{% include partial('_new_project.html.j2') %}
+<div class="w-full h-full flex flex-col gap-6 p-8">
+    <div class="space-y-1">
+        <h1 class="text-2xl font-semibold">Projects</h1>
+        <p class="text-ink-muted">
+            Organize your services into projects
+            to enable shared configuration and communication.
+        </p>
+    </div>
+    {% if projects | count %}
+    
+    {% else %}
+    <div class="w-full flex-1 flex justify-center items-center border border-border rounded-xl bg-dotted">
+        <div class="w-full max-w-xl mx-auto flex flex-col items-center gap-6">
+            <div class="rounded-3xl p-4 flex justify-center items-center bg-brand-strong border-4 border-brand">
+                <i data-lucide="box" class="size-10 text-surface-0"></i>
+            </div>
+            <div class="space-y-3 text-center">
+                <h2 class="text-3xl font-semibold">Create your first project</h2>
+                <p class="text-ink-muted">
+                    A project groups the services you deploy
+                    together. They share a private network and
+                    reach each other by name.
+                </p>
+            </div>
+            <button 
+                type="button" 
+                class="px-3 py-2 flex items-center gap-2 rounded-lg bg-brand-strong hover:bg-brand-strong/70 active:translate-y-0.5 duration-150 font-medium text-surface-0"
+                x-on:click="activeDialog = '{{ dialog_id }}'"
+            >
+                <i data-lucide="plus" class="size-4"></i>
+                Create a project
+            </button>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -18,6 +18,7 @@ wheels/
 # SQLite Databases
 *.sqlite
 *.sqlite3
+
 # Tailwind build output / collectstatic
 apps/theme/static/css/dist/
-staticfiles/
+public/

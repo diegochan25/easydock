@@ -8,9 +8,18 @@ env = Env(
     PYTHON_ENV=(str, ''),
     SECRET_KEY=(str, ''),
     ALLOWED_HOSTS=(list, []),
+
+    SMTP_HOST = (str, ''),
+    SMTP_PORT = (int, 0),
+    SMTP_USER = (str, ''),
+    SMTP_PASSWORD = (str, ''),
+    SMTP_STARTTLS = (bool, False),
+    SMTP_FROM = (str, '')
 )
 
 Env.read_env(BASE_DIR / os.environ.get('ENV_FILE', '.env.dev'))
+
+# BEGIN environment variables
 
 SECRET_KEY = env.str('SECRET_KEY')
 
@@ -20,6 +29,28 @@ DEBUG = PYTHON_ENV == 'development'
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
+SMTP_HOST = env.str('SMTP_HOST')
+
+SMTP_PORT = env.int('SMTP_PORT')
+
+SMTP_USER = env.str('SMTP_USER')
+
+SMTP_PASSWORD = env.str('SMTP_PASSWORD')
+
+SMTP_STARTTLS = env.bool('SMTP_STARTTLS')
+
+SMTP_FROM = env.str('SMTP_FROM')
+
+DEFAULT_FROM_EMAIL = SMTP_FROM
+
+SERVER_EMAIL = SMTP_FROM
+
+# END environment variables
+
+LOGIN_URL = 'accounts:sign_in'
+
+LOGIN_REDIRECT_URL = 'projects:index'
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -28,12 +59,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tailwind',
-    'apps.theme',
     'apps.accounts',
+    'apps.core',
     'apps.projects',
+    'apps.services',
+    'apps.theme'
 ]
 
+SERIALIZATION_MODULES = {
+    'yml': 'django.core.serializers.pyyaml',
+}
+
 TAILWIND_APP_NAME = 'apps.theme'
+
 TAILWIND_USE_STANDALONE_BINARY = True
 
 MIDDLEWARE = [
@@ -78,6 +116,22 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler'
+            }
+        },
+    'loggers': {
+        'django.request': {
+            'handlers': ['console'], 
+            'level': 'ERROR'
+        }
     }
 }
 

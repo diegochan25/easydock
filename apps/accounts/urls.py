@@ -1,8 +1,12 @@
 from django.urls import path
 from apps.accounts import views
 
+app_name = 'accounts'
+
 urlpatterns = [
-    path('setup/', views.setup),
-    path('join/', views.join),
-    path('login/', views.login),
+    path('setup/', views.setup, name='setup'),
+    path('join/', views.join, name='join'),
+    path('login/', views.sign_in, name='sign_in'),
+    path('password/forgot', views.forgot_password, name='forgot_password'),
+    path('password/reset', views.reset_password, name='reset_password')
 ]

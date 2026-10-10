@@ -1,3 +1,5 @@
+{% from global_macro('_alert.html.j2') import alert %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,11 +9,18 @@
     {{ tailwind_css() }}
     <script src="{{ static('vendor/lucide.min.js') }}" defer></script>
     <script src="{{ static('vendor/htmx.min.js') }}" defer></script>
-    <script src="{{ static('js/index.js') }}" defer></script>
+    <script src="{{ static('js/index.js') }}" data-lab-icons="{{ static('vendor/lucide-lab-icons.json') }}" defer></script>
     <script src="{{ static('vendor/alpine.min.js') }}" defer></script>
+    <link rel="shortcut icon" href="{{ static('icon.svg') }}" type="image/svg+xml">
     {% block head %}{% endblock %}
 </head>
-<body class="w-full h-screen overflow-hidden bg-surface-0 text-text">
+<body 
+    class="w-full h-screen overflow-hidden bg-surface-0 text-ink"
+    x-data="{activeDialog: null}"
+>
+    {% for message in messages %}
+        {{ alert(message) }}
+    {% endfor %}
     {% block body %}
     {% endblock %}
 </body>

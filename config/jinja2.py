@@ -29,6 +29,10 @@ def _local(context, kind: str, relpath: str) -> str:
     return _global(kind, relpath)
 
 
+def global_icon(slug: str) -> str:
+    return _global('icons', f"{slug}.svg.j2")
+
+
 def global_layout(relpath: str) -> str:
     return _global('layouts', relpath)
 
@@ -73,6 +77,7 @@ def environment(**options):
         url=reverse,
         tailwind_css=tailwind_css,
         now=now,
+        global_icon=global_icon,
         global_layout=global_layout,
         global_macro=global_macro,
         global_partial=global_partial,

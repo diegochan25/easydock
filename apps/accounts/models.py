@@ -1,11 +1,11 @@
 from typing import TYPE_CHECKING, Self
-from uuid import uuid4
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 
 if TYPE_CHECKING:
     from django.db.models.fields.related_descriptors import ManyRelatedManager, RelatedManager
+    from apps.projects.models import Project
 
 SUPERADMIN_ROLE_NAME = '__superadmin__'
 
@@ -33,7 +33,7 @@ class UserManager(BaseUserManager['User']):
         return self._create_user(email, password, admin=True, **extra)
 
 class User(AbstractBaseUser, PermissionsMixin):
-    id = models.UUIDField(default=uuid4, primary_key=True)
+    id = models.BigAutoField(primary_key=True)
 
     full_name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255, unique=True)
@@ -46,6 +46,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     # Annotations
     role_assignments: 'RelatedManager[UserRole]'
+    created_projects : 'RelatedManager[Project]'
+    owned_projects: 'RelatedManager[Project]'
 
     # BaseUserManager fields
     USERNAME_FIELD = 'email'
@@ -84,13 +86,16 @@ class UserRole(models.Model):
     assigned_by = models.ForeignKey('User', null=True, on_delete=models.SET_NULL, related_name='role_assignments')
 
     assigned_at = models.DateTimeField(auto_now_add=True)
-    
+
+    # Annotations
+    objects: 'models.Manager[UserRole]'
+
     class Meta:
         db_table = 'user_roles'
 
 
 class Role(models.Model):
-    id = models.UUIDField(default=uuid4, primary_key=True)
+    id = models.BigAutoField(primary_key=True)
 
     name = models.CharField(max_length=255, unique=True)
     internal = models.BooleanField(default=False)
@@ -101,6 +106,7 @@ class Role(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     # Annotations
+    objects: 'models.Manager[Role]'
     users: 'ManyRelatedManager[User, UserRole]'
 
     class Meta:
@@ -134,7 +140,7 @@ class Role(models.Model):
 
 
 class Invite(models.Model):
-    id = models.UUIDField(default=uuid4, primary_key=True)
+    id = models.BigAutoField(primary_key=True)
 
     token = models.CharField(max_length=255, unique=True)
     email = models.EmailField(max_length=255, unique=True)
@@ -142,3 +148,6 @@ class Invite(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    # Annotations
+    objects: 'models.Manager[Invite]'

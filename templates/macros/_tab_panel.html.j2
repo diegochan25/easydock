@@ -1,0 +1,5 @@
+{% macro tab_panel(id) %}
+<div class="contents" x-show="active === '{{ id }}'" x-cloak>
+    {{ caller() }}
+</div>
+{% endmacro %}

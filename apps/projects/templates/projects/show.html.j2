@@ -1,0 +1,103 @@
+{% extends global_layout('base.html.j2') %}
+
+{% from global_macro('_tab_group.html.j2') import tab_group %}
+{% from global_macro('_tab_panel.html.j2') import tab_panel %}
+
+{% set SERVICES = 'services' %}
+{% set DEPLOYMENTS = 'deployments' %}
+{% set NETWORKING = 'networking' %}
+{% set SETTINGS = 'settings' %}
+
+{% set service_count = project.services.count() %}
+{% set db_dialog_id = 'databaseServices' %}
+{% set function_dialog_id = 'functionServices' %}
+
+{% block body %}
+{% include partial('_new_database.html.j2') %}
+{% include partial('_new_function.html.j2') %}
+<div class="w-full h-full flex flex-col gap-6 p-8">
+    <h1 class="text-2xl font-semibold">{{ project.name }}</h1>
+    <dl class="flex items-center gap-4 text-ink-muted">
+        <dt>Private network</dt>
+        <dd>
+            <code class="text-sm px-2 py-0.5 rounded-md bg-surface-200">sample-network</code>
+        </dd>
+    </dl>
+    {% call tab_group('project', [
+    {'id': SERVICES, 'label': 'Services', 'badge': service_count},
+    {'id': DEPLOYMENTS, 'label': 'Deployments'},
+    {'id': NETWORKING, 'label': 'Networking'},
+    {'id': SETTINGS, 'label': 'Settings'},
+    ], default=SERVICES, class_name='flex-1') %}
+    {% call tab_panel(SERVICES) %}
+    {% if service_count %}
+
+    {% else %}
+    <div class="w-full h-full border border-border rounded-xl bg-dotted flex justify-center items-center p-4">
+        <div class="space-y-8">
+            <div class="w-full max-w-xl mx-auto flex flex-col justify-center items-center gap-8">
+                <div class="rounded-3xl p-4 flex justify-center items-center bg-brand-strong border-4 border-brand">
+                    <i data-lucide="box" class="size-10 text-surface-0"></i>
+                </div>
+                <div class="space-y-3 text-center">
+                    <h2 class="text-3xl font-semibold">Deploy your first service</h2>
+                    <p class="text-ink-muted">
+                        This will build a container from one of many available
+                        images or blueprints.
+                    </p>
+                </div>
+            </div>
+            <section class="w-full grid grid-cols-3 gap-8">
+                <button
+                    class="flex flex-col items-start p-6 bg-surface-100 hover:bg-surface-200 shadow-md shadow-shadow text-left gap-4 rounded-lg border-2 border-border hover:border-border-strong duration-150"
+                    x-on:click="activeDialog = '{{ db_dialog_id }}'">
+                    <div class="bg-surface-0 p-4 w-max flex justify-center items-center rounded-xl">
+                        <i data-lucide="database" class="size-8 text-ink/70"></i>
+                    </div>
+                    <div class="space-y-1">
+                        <h3 class="text-xl font-semibold">Database</h3>
+                        <p class="text-ink-muted max-w-9/10">
+                            Create a database for this project
+                        </p>
+                    </div>
+                </button>
+                <button
+                    class="flex flex-col items-start p-6 bg-surface-100 hover:bg-surface-200 shadow-md shadow-shadow text-left gap-4 rounded-lg border-2 border-border hover:border-border-strong duration-150"
+                    x-on:click="activeDialog = '{{ function_dialog_id }}'">
+                    <div class="bg-surface-0 p-4 w-max flex justify-center items-center rounded-xl">
+                        <i data-lucide="bucket" class="size-8 text-ink/70"></i>
+                    </div>
+                    <div class="space-y-1">
+                        <h3 class="text-xl font-semibold">Bucket</h3>
+                        <p class="text-ink-muted max-w-9/10">
+                            Create an object storage bucket
+                        </p>
+                    </div>
+                </button>
+                <button
+                    class="flex flex-col items-start p-6 bg-surface-100 hover:bg-surface-200 shadow-md shadow-shadow text-left gap-4 rounded-lg border-2 border-border hover:border-border-strong duration-150"
+                    x-on:click="activeDialog = '{{ function_dialog_id }}'">
+                    <div class="bg-surface-0 p-4 w-max flex justify-center items-center rounded-xl">
+                        <i data-lucide="lambda" class="size-8 text-ink/70"></i>
+                    </div>
+                    <div class="space-y-1">
+                        <h3 class="text-xl font-semibold">Function</h3>
+                        <p class="text-ink-muted max-w-9/10">
+                            Create a specialized runtime image for a lambda function
+                        </p>
+                    </div>
+                </button>
+            </section>
+        </div>
+    </div>
+    {% endif %}
+    {% endcall %}
+    {% call tab_panel(DEPLOYMENTS) %}
+    {% endcall %}
+    {% call tab_panel(NETWORKING) %}
+    {% endcall %}
+    {% call tab_panel(SETTINGS) %}
+    {% endcall %}
+    {% endcall %}
+</div>
+{% endblock %}

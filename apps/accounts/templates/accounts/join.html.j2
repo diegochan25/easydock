@@ -2,6 +2,7 @@
 
 {% block content %}
 <form method="post" class="w-full max-w-lg bg-surface-100 border border-border rounded-lg p-6 flex flex-col gap-6">
+    {{ csrf_input }}
     <div class="space-y-2">
         <h2 class="text-2xl font-semibold">Create your account</h2>
         <p class="text-ink-muted">
@@ -9,75 +10,76 @@
             this instance
         </p>
     </div>
-    <div class="space-y-4">
-        <div class="space-y-1">
-            <div class="block font-medium">
-                {{ form.full_name.label_tag() }}
-            </div>
-            <div class="bg-surface-0 border border-border rounded-md text-lg w-full flex items-center px-2 py-1 gap-2 outline-2 outline-transparent has-focus:outline-focus-ring duration-150">
-                {{ form.full_name }}
-            </div>
-            <div class="text-sm text-red-600">
+    <div class="space-y-1">
+        <div class="block font-medium">
+            {{ form.full_name.label_tag() }}
+        </div>
+        <div class="bg-surface-0 border border-border rounded-md text-lg w-full flex items-center px-2 py-1 gap-2 outline-2 outline-transparent has-focus:outline-focus-ring duration-150">
+            {{ form.full_name }}
+        </div>
+        <div class="text-sm {% if form.full_name.errors %}text-red-600{% else %}text-ink-muted{% endif %}">
+            {% if form.full_name.errors %}
                 {{ form.full_name.errors }}
-            </div>
+            {% else %}
+            {% endif %}
         </div>
     </div>
-    <div class="space-y-4">
-        <div class="space-y-1">
-            <div class="block font-medium">
-                Email
-            </div>
-            <div class="bg-surface-200 border border-border rounded-md text-lg w-full flex items-center px-2 py-1 gap-2 outline-2 outline-transparent has-focus:outline-focus-ring duration-150">
-                <input type="email" name="email" id="email" value="{{ invite_email | default('') }}" readonly>
-            </div>
-            <div class="text-sm text-ink-muted">
-                Set by your invitation
-            </div>
+    <div class="space-y-1">
+        <div class="block font-medium">
+            Email
+        </div>
+        <div class="bg-surface-200 border border-border rounded-md text-lg w-full flex items-center px-2 py-1 gap-2 outline-2 outline-transparent has-focus:outline-focus-ring duration-150">
+            <input type="email" name="email" id="email" value="{{ invite_email | default('') }}" readonly>
+        </div>
+        <div class="text-sm text-ink-muted">
+            Set by your invitation
         </div>
     </div>
-    <div class="space-y-4" x-data="{showPassword: false}">
-        <div class="space-y-1">
-            <div class="block font-medium">
-                {{ form.password.label_tag() }}
-            </div>
-            <div class="bg-surface-0 border border-border rounded-md text-lg w-full flex items-center px-2 py-1 gap-2 outline-2 outline-transparent has-focus:outline-focus-ring duration-150">
-                {{ form.password }}
-                <button 
-                    type="button"
-                    class="text-blue-500 hover:underline" 
-                    x-on:click="showPassword = !showPassword"
-                    x-text="showPassword ? 'Hide' : 'Show'"
-                ></button>
-            </div>
-            <div class="text-sm text-red-600">
+    <div class="space-y-1" x-data="{showPassword: false}">
+        <div class="block font-medium">
+            {{ form.password.label_tag() }}
+        </div>
+        <div class="bg-surface-0 border border-border rounded-md text-lg w-full flex items-center px-2 py-1 gap-2 outline-2 outline-transparent has-focus:outline-focus-ring duration-150">
+            {{ form.password }}
+            <button 
+                type="button"
+                class="text-brand text-sm font-medium hover:underline" 
+                x-on:click="showPassword = !showPassword"
+                x-text="showPassword ? 'Hide' : 'Show'"
+            ></button>
+        </div>
+        <div class="text-sm {% if form.password.errors %}text-red-600{% else %}text-ink-muted{% endif %}">
+            {% if form.password.errors %}
                 {{ form.password.errors }}
-            </div>
+            {% else %}
+            {% endif %}
         </div>
     </div>
-    <div class="space-y-4" x-data="{showConfirmPassword: false}">
-        <div class="space-y-1">
-            <div class="block font-medium">
-                {{ form.confirm_password.label_tag() }}
-            </div>
-            <div class="bg-surface-0 border border-border rounded-md text-lg w-full flex items-center px-2 py-1 gap-2 outline-2 outline-transparent has-focus:outline-focus-ring duration-150">
-                {{ form.confirm_password }}
-                <button 
-                    type="button"
-                    class="text-blue-500 hover:underline" 
-                    x-on:click="showConfirmPassword = !showConfirmPassword"
-                    x-text="showConfirmPassword ? 'Hide' : 'Show'"
-                ></button>
-            </div>
-            <div class="text-sm text-red-600">
+    <div class="space-y-1" x-data="{showConfirmPassword: false}">
+        <div class="block font-medium">
+            {{ form.confirm_password.label_tag() }}
+        </div>
+        <div class="bg-surface-0 border border-border rounded-md text-lg w-full flex items-center px-2 py-1 gap-2 outline-2 outline-transparent has-focus:outline-focus-ring duration-150">
+            {{ form.confirm_password }}
+            <button 
+                type="button"
+                class="text-brand text-sm font-medium hover:underline" 
+                x-on:click="showConfirmPassword = !showConfirmPassword"
+                x-text="showConfirmPassword ? 'Hide' : 'Show'"
+            ></button>
+        </div>
+        <div class="text-sm {% if form.confirm_password.errors %}text-red-600{% else %}text-ink-muted{% endif %}">
+            {% if form.confirm_password.errors %}
                 {{ form.confirm_password.errors }}
-            </div>
+            {% else %}
+            {% endif %}
         </div>
     </div>
     <input 
         type="submit" 
         value="Create account" 
-        class="px-3 py-2 rounded-lg bg-brand text-surface-0 font-medium hover:bg-brand/70 active:translate-y-1 duration-150"
+        class="px-3 py-2 rounded-lg bg-brand text-surface-0 font-medium hover:bg-brand/70 active:translate-y-0.5 duration-150"
     >
-    <p class="w-full text-center text-ink-muted">Already have an account? <a href="/auth/login" class="text-brand hover:underline">Sign in</a></p>
+    <p class="w-full text-center text-ink-muted">Already have an account? <a href="{{ url('accounts:sign_in') }}" class="text-brand hover:underline">Sign in</a></p>
 </form>
 {% endblock %}

@@ -1,0 +1,22 @@
+{% extends layout('accounts.html.j2') %}
+
+{% block content %}
+<div class="w-full max-w-lg bg-surface-100 border border-border rounded-lg p-6 flex flex-col gap-6">
+    <div class="p-4 rounded-full bg-surface-100 flex justify-center items-center overflow-hidden">
+        <i data-lucide="mail" class="size-4 text-ink"></i>
+    </div>
+    <div class="space-y-2">
+        <h2 class="text-2xl font-semibold">Check your inbox</h2>
+        <p class="text-ink-muted">
+            If an account exists for {{ email }}, 
+            a reset link is on its way. The link expires in 30 minutes.
+        </p>
+    </div>
+    <a 
+        href="{{ url('accounts:sign_in') }}"
+        class="flex justify-center items-center px-3 py-2 rounded-lg text-brand bg-border font-medium hover:bg-border/70 active:translate-y-0.5 duration-150"
+    >Back to sign in</a>
+    {# TODO decide resend strategy #}
+    <p class="text-ink-muted text-center">Didn't get it? <a href="" class="text-brand hover:underline">Resend link</a> or <a href="{{ url('accounts:forgot_password') }}" class="text-brand hover:underline">use a different email</a></p>
+</div>
+{% endblock %}

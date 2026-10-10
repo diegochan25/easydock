@@ -1,69 +1,72 @@
 @import "tailwindcss";
 @source "../../../../**/*.{html,j2,py,js}";
 
-/* IBM Plex variable fonts from /static/font (paths relative to the compiled css/dist/styles.css). */
 @font-face {
-  font-family: "IBM Plex Sans";
-  src: url("../../font/IBMPlexSans-VariableFont_wdth,wght.ttf") format("truetype");
-  font-weight: 100 700;
-  font-stretch: 85% 100%;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "IBM Plex Sans";
-  src: url("../../font/IBMPlexSans-Italic-VariableFont_wdth,wght.ttf") format("truetype");
-  font-weight: 100 700;
-  font-stretch: 85% 100%;
-  font-style: italic;
-  font-display: swap;
-}
-@font-face {
-  font-family: "IBM Plex Mono";
-  src: url("../../font/IBMPlexMono-VariableFont_wght.ttf") format("truetype");
-  font-weight: 100 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "IBM Plex Mono";
-  src: url("../../font/IBMPlexMono-Italic-VariableFont_wght.ttf") format("truetype");
-  font-weight: 100 700;
-  font-style: italic;
-  font-display: swap;
+    font-family: "IBM Plex Sans";
+    src: url("../../font/IBMPlexSans-VariableFont_wdth,wght.ttf") format("truetype");
+    font-weight: 100 700;
+    font-stretch: 85% 100%;
+    font-style: normal;
+    font-display: swap;
 }
 
-/* EasyDock color tokens as Tailwind v4 theme variables, via light-dark(). */
+@font-face {
+    font-family: "IBM Plex Sans";
+    src: url("../../font/IBMPlexSans-Italic-VariableFont_wdth,wght.ttf") format("truetype");
+    font-weight: 100 700;
+    font-stretch: 85% 100%;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "IBM Plex Mono";
+    src: url("../../font/IBMPlexMono-VariableFont_wght.ttf") format("truetype");
+    font-weight: 100 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "IBM Plex Mono";
+    src: url("../../font/IBMPlexMono-Italic-VariableFont_wght.ttf") format("truetype");
+    font-weight: 100 700;
+    font-style: italic;
+    font-display: swap;
+}
+
 @theme {
-  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  --color-surface-0: light-dark(#f7f8fb, #0b1220);
-  --color-surface-100: light-dark(#ffffff, #121b2e);
-  --color-surface-200: light-dark(#eef1f7, #1a2540);
-  --color-border: light-dark(#dce1ec, #2a3654);
-  --color-border-strong: light-dark(#7c879e, #5a6ea3);
-  --color-ink: light-dark(#101827, #e8ecf5);
-  --color-ink-muted: light-dark(#5b6478, #9aa7c7);
-  --color-ink-faint: light-dark(#8891a6, #64719a);
-  --color-brand: light-dark(#0f766e, #14b8a6);
-  --color-brand-strong: light-dark(#115e59, #5eead4);
-  --color-brand-soft: light-dark(#e6fbf8, #123b38);
-  --color-on-brand: light-dark(#ffffff, #04231f);
-  --color-success: light-dark(#047857, #34d399);
-  --color-success-soft: light-dark(#e7f8f1, #0f2e27);
-  --color-on-success: light-dark(#ffffff, #03140f);
-  --color-warning: light-dark(#d97706, #fbbf24);
-  --color-warning-soft: light-dark(#fff9ef, #2e2508);
-  --color-on-warning: light-dark(#241a03, #241a03);
-  --color-danger: light-dark(#dc2626, #f87171);
-  --color-danger-soft: light-dark(#fdecec, #3a1414);
-  --color-on-danger: light-dark(#ffffff, #2a0a0a);
-  --color-info: light-dark(#2563eb, #60a5fa);
-  --color-info-soft: light-dark(#eaf1fe, #112a4a);
-  --color-on-info: light-dark(#ffffff, #04122a);
-  --color-terminal-surface: light-dark(#0a0e14, #0a0e14);
-  --color-terminal-ink: light-dark(#d7dee8, #d7dee8);
-  --color-focus-ring: light-dark(#115e59, #5eead4);
+    --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --color-surface-0: light-dark(#f7f8fb, #0b1220);
+    --color-surface-100: light-dark(#ffffff, #121b2e);
+    --color-surface-200: light-dark(#eef1f7, #1a2540);
+    --color-border: light-dark(#dce1ec, #2a3654);
+    --color-border-strong: light-dark(#7c879e, #5a6ea3);
+    --color-ink: light-dark(#101827, #e8ecf5);
+    --color-ink-muted: light-dark(#5b6478, #9aa7c7);
+    --color-ink-faint: light-dark(#8891a6, #64719a);
+    --color-brand: light-dark(#0f766e, #14b8a6);
+    --color-brand-strong: light-dark(#115e59, #5eead4);
+    --color-brand-soft: light-dark(#e6fbf8, #123b38);
+    --color-on-brand: light-dark(#ffffff, #04231f);
+    --color-success: light-dark(#047857, #34d399);
+    --color-success-soft: light-dark(#e7f8f1, #0f2e27);
+    --color-on-success: light-dark(#ffffff, #03140f);
+    --color-warning: light-dark(#d97706, #fbbf24);
+    --color-warning-soft: light-dark(#fff9ef, #2e2508);
+    --color-on-warning: light-dark(#241a03, #241a03);
+    --color-danger: light-dark(#dc2626, #f87171);
+    --color-danger-soft: light-dark(#fdecec, #3a1414);
+    --color-on-danger: light-dark(#ffffff, #2a0a0a);
+    --color-info: light-dark(#2563eb, #60a5fa);
+    --color-info-soft: light-dark(#eaf1fe, #112a4a);
+    --color-on-info: light-dark(#ffffff, #04122a);
+    --color-terminal-surface: light-dark(#0a0e14, #0a0e14);
+    --color-terminal-ink: light-dark(#d7dee8, #d7dee8);
+    --color-focus-ring: light-dark(#115e59, #5eead4);
+    --color-shadow: light-dark(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1));
+
 }
 
 :root { 
@@ -78,46 +81,49 @@
     color-scheme: dark; 
 }
 
-/* Checkbox with a Lucide "check" icon as a mask on ::after, scaled 0 -> 100% when checked. */
 @layer components {
-  .checkbox {
-    appearance: none;
-    display: inline-grid;
-    place-items: center;
-    width: 1rem;
-    height: 1rem;
-    border-radius: 0.25rem;
-    border: 1px solid var(--color-border-strong);
-    background-color: var(--color-surface-100);
-    transition: background-color 150ms, border-color 150ms;
-    &:focus {
-        outline-width: 0;
+    .checkbox {
+        appearance: none;
+        cursor: pointer;
+        display: inline-grid;
+        place-items: center;
+        width: 1rem;
+        height: 1rem;
+        border-radius: 0.25rem;
+        border: 1px solid var(--color-border-strong);
+        background-color: var(--color-surface-100);
+        transition: background-color 150ms, border-color 150ms;
+
+        &:focus {
+            outline-width: 0;
+        }
+
+        &::after {
+            content: "";
+            width: 100%;
+            height: 100%;
+            background-color: var(--color-on-brand);
+            transform: scale(0);
+            transition: transform 150ms ease-out;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / 80% no-repeat;
+        }
+
+        &:checked {
+            background-color: var(--color-brand);
+            border-color: var(--color-brand);
+
+            &::after {
+                transform: scale(1);
+            }
+        }
     }
-  }
+}
 
-  .checkbox::after {
-    content: "";
-    width: 100%;
-    height: 100%;
-    background-color: var(--color-on-brand);
-    transform: scale(0);
-    transition: transform 150ms ease-out;
-    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / 80% no-repeat;
-  }
-
-  .checkbox:checked {
-    background-color: var(--color-brand);
-    border-color: var(--color-brand);
-  }
-
-  .checkbox:checked::after {
-    transform: scale(1);
-  }
-
-  .checkbox:focus-visible {
-    outline: 2px solid var(--color-focus-ring);
-    outline-offset: 2px;
-  }
+@utility bg-dotted {
+    background-color: var(--color-surface-100);
+    opacity: 0.8;
+    background-image: radial-gradient(var(--color-border) 1px, var(--color-surface-100) 1px);
+    background-size: 40px 40px;
 }
 
 button, a, input[type="reset"], input[type="submit"], details summary {

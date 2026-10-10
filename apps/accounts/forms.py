@@ -1,3 +1,5 @@
+from typing import Any
+
 from django import forms
 
 class CreateOwnerAccount(forms.Form):
@@ -21,9 +23,11 @@ class CreateOwnerAccount(forms.Form):
         widget=forms.PasswordInput(attrs={'class': 'flex-1 focus:outline-0', 'x-bind:type': "showConfirmPassword ? 'text' : 'password'"})
     )
 
-    def passwords_match(self) -> bool:
-        return self.password == self.confirm_password
-
+    def clean(self) -> dict[str, Any] | None:
+        cleaned = super().clean()
+        if not cleaned.get('password') == cleaned.get('confirm_password'):
+            self.add_error('confirm_password', 'Passwords do not match')
+        return cleaned
 
 class CreateAccountFromInvite(forms.Form):
     def __init__(self, *args, **kwargs):
@@ -34,6 +38,10 @@ class CreateAccountFromInvite(forms.Form):
         widget=forms.TextInput(attrs={'class': 'flex-1 focus:outline-0'})
     )
 
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={'class': 'flex-1 focus:outline-0', 'placeholder': 'name@example.com', 'readonly': True})
+    )
+
     password = forms.CharField(
         widget=forms.PasswordInput(attrs={'class': 'flex-1 focus:outline-0', 'x-bind:type': "showPassword ? 'text' : 'password'"})
     )
@@ -42,11 +50,14 @@ class CreateAccountFromInvite(forms.Form):
         widget=forms.PasswordInput(attrs={'class': 'flex-1 focus:outline-0', 'x-bind:type': "showConfirmPassword ? 'text' : 'password'"})
     )
 
-    def passwords_match(self) -> bool:
-        return self.password == self.confirm_password
+    def clean(self) -> dict[str, Any] | None:
+        cleaned = super().clean()
+        if not cleaned.get('password') == cleaned.get('confirm_password'):
+            self.add_error('confirm_password', 'Passwords do not match')
+        return cleaned
 
 
-class Login(forms.Form):
+class SignIn(forms.Form):
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')
         super().__init__(*args, **kwargs)
@@ -60,5 +71,34 @@ class Login(forms.Form):
     )
 
     remember_me = forms.BooleanField(
+        required=False,
         widget=forms.CheckboxInput(attrs={'class': 'checkbox'})
     )
+
+class ForgotPassword(forms.Form):    
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('label_suffix', '')
+        super().__init__(*args, **kwargs)
+
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={'class': 'flex-1 focus:outline-0'})
+    )
+
+class ResetPassword(forms.Form):
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('label_suffix', '')
+        super().__init__(*args, **kwargs)
+
+    new_password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'flex-1 focus:outline-0', 'x-bind:type': "showPassword ? 'text' : 'password'"})
+    )
+    
+    confirm_new_password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'flex-1 focus:outline-0', 'x-bind:type': "showConfirmPassword ? 'text' : 'password'"})
+    )
+
+    def clean(self) -> dict[str, Any] | None:
+        cleaned = super().clean()
+        if not cleaned.get('password') == cleaned.get('confirm_password'):
+            self.add_error('confirm_password', 'Passwords do not match')
+        return cleaned

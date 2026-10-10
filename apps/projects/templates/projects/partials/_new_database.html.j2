@@ -1,0 +1,72 @@
+{# SET db_dialog_id ON THE CALLING TEMPLATE #}
+
+{% from global_macro('_dialog.html.j2') import dialog %}
+
+{% call dialog(db_dialog_id) %}
+    <div class="flex flex-col gap-8 flex-1 min-h-0">
+        <div class="space-y-1">
+            <h2 class="text-xl font-semibold">Select a database</h2>
+            <p class="text-ink-muted">
+                If your DBMS of choice doesn't appear here, please create
+                your database via the Images option, and attach a volume in
+                Options.
+            </p>
+        </div>
+        <div
+            class="bg-surface-0 border border-border rounded-md text-lg w-full flex items-center px-2 py-1 gap-2 outline-2 outline-transparent has-focus:outline-focus-ring duration-150"
+            x-data="{query: ''}"
+        >
+            <i data-lucide="search" class="size-4 text-ink-muted"></i>
+            <input
+                type="text"
+                id="query"
+                class="flex-1 focus:outline-0"
+                placeholder="Search databases..."
+                x-model="query"
+            >
+            <button
+                type="button"
+                class="contents"
+                x-show="query"
+                x-on:click="query = ''"
+            >
+                <i data-lucide="x" class="size-4 text-ink-muted"></i>
+            </button>
+        </div>
+
+        <form method="post" class="contents" x-data="{selectedDatabase: '{{ database_form.dbms.value() or '' }}'}">
+            {{ csrf_input }}
+            <section class="p-3 grid grid-cols-2 gap-6 flex-1 min-h-0 overflow-y-auto">
+                {% for d in databases %}
+                    <label class="flex cursor-pointer duration-150" for="dbms-{{ d.slug }}">
+                        <input
+                            type="radio"
+                            class="peer sr-only"
+                            id="dbms-{{ d.slug }}"
+                            name="dbms"
+                            value="{{ d.slug }}"
+                            x-model="selectedDatabase"
+                            {% if database_form.dbms.value() == d.slug %}checked{% endif %}
+                            required
+                        >
+                        <div
+                            class="flex flex-col flex-1 gap-4 items-start p-4 rounded-lg border border-border outline-2 outline-transparent hover:outline-focus-ring/60 peer-checked:outline-focus-ring duration-150"
+                        >
+                            {% include global_icon(d.slug) %}
+                            <div>
+                                <h4 class="text-lg font-medium">{{ d.label }}</h4>
+                                <p class="text-sm text-ink-muted">{{ d.description }}</p>
+                            </div>
+                        </div>
+                    </label>
+                {% endfor %}
+            </section>
+            <input
+                type="submit"
+                value="Continue"
+                class="px-3 py-2 rounded-lg font-medium bg-brand hover:bg-brand/70 duration-150 disabled:bg-brand/40 disabled:cursor-not-allowed!"
+                x-bind:disabled="!selectedDatabase"
+            />
+        </form>
+    </div>
+{% endcall %}

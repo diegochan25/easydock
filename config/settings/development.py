@@ -10,3 +10,5 @@ MIDDLEWARE += ['django_browser_reload.middleware.BrowserReloadMiddleware']  # no
 STORAGES['staticfiles'] = {  # noqa: F405
     'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
 }
+
+LOGGING['loggers']['django.request']['level'] = 'INFO'

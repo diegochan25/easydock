@@ -1,0 +1,56 @@
+{# SET dialog_id ON THE CALLING TEMPLATE #}
+
+{% from global_macro('_dialog.html.j2') import dialog %}
+
+{% call dialog(dialog_id) %}
+<div class="space-y-8">
+    <div class="space-y-1">
+        <h2 class="text-xl font-semibold">New project</h2>
+        <p class="text-ink-muted">Once you're done, you'll be sent to the project overview page.</p>
+    </div>
+    <form method="post" class="space-y-4">
+        {{ csrf_input }}
+        <div class="space-y-1">
+            <div class="block font-medium">
+                {{ form.project_name.label_tag() }}
+            </div>
+            <div class="bg-surface-0 border border-border rounded-md text-lg w-full flex items-center px-2 py-1 gap-2 outline-2 outline-transparent has-focus:outline-focus-ring duration-150">
+                {{ form.project_name }}
+            </div>
+            <div class="text-sm {% if form.project_name.errors %}text-red-600{% else %}text-ink-muted{% endif %}">
+                {% if form.project_name.errors %}
+                    {{ form.project_name.errors }}
+                {% else %}
+                    Letters, digits, underscores, periods and hyphens.
+                {% endif %}
+            </div>
+        </div>
+        <div class="space-y-1">
+            <div class="block font-medium">
+                {{ form.description.label_tag() }}
+            </div>
+            <div class="bg-surface-0 border border-border rounded-md text-lg w-full flex items-center p-0.5 gap-2 outline-2 outline-transparent has-focus:outline-focus-ring duration-150">
+                {{ form.description }}
+            </div>
+            <div class="text-sm {% if form.description.errors %}text-red-600{% else %}text-ink-muted{% endif %}">
+                {% if form.description.errors %}
+                    {{ form.description.errors }}
+                {% else %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="flex w-full justify-end items-center gap-4">
+            <input 
+                type="reset" 
+                value="Cancel" 
+                class="flex justify-center items-center px-3 py-2 rounded-lg text-brand bg-border font-medium hover:bg-border/70 active:translate-y-0.5 duration-150"
+            >
+            <input 
+                type="submit" 
+                value="Create project" 
+                class="flex justify-center items-center px-3 py-2 rounded-lg bg-brand text-surface-0 font-medium hover:bg-brand/70 active:translate-y-0.5 duration-150"
+            >
+        </div>
+    </form>
+</div>
+{% endcall %}
